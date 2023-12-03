@@ -1,12 +1,18 @@
 from pathlib import Path
 import sys
 
-def calibration1(line: str):
-    digits = [x for x in line if x.isdigit()]
-    first, last = digits[0], digits[-1]
-    return 10 * int(first) + int(last)
+def calibration(digits: list[int]):
+    if digits:
+        first, last = digits[0], digits[-1]
+        return 10 * int(first) + int(last)
+    else:
+        return 0
 
-def calibration2(line: str):
+def part1(line: str) -> int:
+    digits = [x for x in line if x.isdigit()]
+    return calibration(digits)
+
+def part2(line: str) -> int:
     digit_values = {
         'one': 1,
         'two': 2,
@@ -27,8 +33,7 @@ def calibration2(line: str):
             if line[i:].startswith(digit):
                 found_digits.append(value)
                 break
-    first, last = found_digits[0], found_digits[-1]
-    return 10 * int(first) + int(last)
+    return calibration(found_digits)
 
 if __name__ == '__main__':
     input_path = sys.argv[1]
@@ -36,6 +41,6 @@ if __name__ == '__main__':
         lines = f.readlines()
     total1, total2 = 0, 0
     for line in lines:
-        total1 += calibration1(line)
-        total2 += calibration2(line)
+        total1 += part1(line)
+        total2 += part2(line)
     print(total1, total2)
